@@ -16,16 +16,14 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-@NamedQueries(
+@NamedQueries({
 		@NamedQuery(name="Funcionario.findByDpt",query = "select f from Funcionario f where departamento_id=:id")
-		)
+		})
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="tipo_funcionario", discriminatorType=DiscriminatorType.STRING, length=1)
 @DiscriminatorValue("F")

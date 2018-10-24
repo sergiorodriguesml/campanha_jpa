@@ -9,9 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+
 @Entity
+@NamedQueries(
+		@NamedQuery(name="Projeto.findByDpt",query="select P from Projeto P where departamento_id=:id")
+		)
 public class Projeto implements Bean {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -65,7 +71,7 @@ public class Projeto implements Bean {
 
 	@Override
 	public String toString() {
-		return "Projeto [id = " + id + ", nome = " + nome + ", tempo = " + tempo + ", departamento = " + departamento.getNome() + "]";
+		return "\nProjeto [id = " + id + ", nome = " + nome + ", tempo = " + tempo + ", departamento = " + departamento.getNome() + "]";
 	}
 
 

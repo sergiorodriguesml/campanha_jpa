@@ -18,5 +18,13 @@ public class FuncionarioJPADAO extends GenericJPADAO<Funcionario> implements Fun
 				.setParameter("id",id)
 				.getResultList();
 	}
+
+	@Override
+	public List<Funcionario> findByProj(int id) {
+		return JPAUtil.getEntityManager()
+				.createNamedQuery("Funcionario.findByProj", Funcionario.class)
+				.setParameter("id",id)
+				.getResultList();
+	}
 }
 

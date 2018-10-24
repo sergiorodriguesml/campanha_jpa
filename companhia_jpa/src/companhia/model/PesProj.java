@@ -7,16 +7,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="PesProj.findByProj",query="select p from PesProj p where projeto_id=:id"),
+	@NamedQuery(name="PesProj.findByFun",query="select p from PesProj p where funcionario_id=:id")
+})
 public class PesProj implements Bean{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="pesproj_id")
 	private int id;
-	@ManyToOne @JoinColumn(name = "funcionario_id")
+	@ManyToOne @JoinColumn(name = "funcionario_id", nullable=false)
 	private Pesquisador pesquisador;
-	@ManyToOne @JoinColumn(name = "projeto_id")
+	@ManyToOne @JoinColumn(name = "projeto_id",nullable=false)
 	private Projeto projeto;
 	private int horas;
 	
@@ -24,8 +30,7 @@ public class PesProj implements Bean{
 
 	
 	
-	public PesProj(int id, Pesquisador pesquisador, Projeto projeto, int horas) {
-		this.id = id;
+	public PesProj(Pesquisador pesquisador, Projeto projeto, int horas) {
 		this.pesquisador = pesquisador;
 		this.projeto = projeto;
 		this.horas = horas;
@@ -74,5 +79,18 @@ public class PesProj implements Bean{
 
 	public void setHoras(int horas) {
 		this.horas = horas;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "PesProj [pesquisador=" + pesquisador + ", projeto=" + projeto + ", horas=" + horas + "]";
+	}
+	public String toFString() {
+		return "\n[projeto = " + projeto.getNome() + ",horas = " + horas + "," + pesquisador + "]";
+	}
+	public String toPString() {
+		return "\n[pesquisador = " + pesquisador.getNome() + ",horas = " + horas + "," + projeto + "]";
 	}
 }
