@@ -7,8 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Dependente.findByFun",query = "select d from Dependente d where funcionario_id=:id")
+	})
 public class Dependente implements Bean {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -24,8 +29,7 @@ public class Dependente implements Bean {
 	
 	public Dependente() {}
 
-	public Dependente(int id, String nome, char sexo, String grauParentesco, Funcionario funcionario) {
-		this.id = id;
+	public Dependente(String nome, char sexo, String grauParentesco, Funcionario funcionario) {
 		this.nome = nome;
 		this.sexo = sexo;
 		this.grauParentesco = grauParentesco;
@@ -68,7 +72,7 @@ public class Dependente implements Bean {
 
 	@Override
 	public String toString() {
-		return "Dependente [id=" + id + ", nome=" + nome + ", sexo=" + sexo + ", grauParentesco=" + grauParentesco
+		return "\nDependente [id=" + id + ", nome=" + nome + ", sexo=" + sexo + ", grauParentesco=" + grauParentesco
 				+ "]";
 	}
 	

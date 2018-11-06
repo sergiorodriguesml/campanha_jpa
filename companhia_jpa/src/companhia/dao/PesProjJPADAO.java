@@ -2,7 +2,6 @@ package companhia.dao;
 
 import java.util.List;
 
-import companhia.model.Funcionario;
 import companhia.model.PesProj;
 import companhia.util.JPAUtil;
 

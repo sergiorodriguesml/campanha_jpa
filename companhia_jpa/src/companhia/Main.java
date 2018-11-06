@@ -8,6 +8,7 @@ import java.util.Scanner;
 import companhia.dao.DepartamentoDAO;
 import companhia.dao.DepartamentoJPADAO;
 import companhia.dao.DependenteDAO;
+import companhia.dao.DependenteJPADAO;
 import companhia.dao.FuncionarioDAO;
 import companhia.dao.FuncionarioJPADAO;
 import companhia.dao.PesProjDAO;
@@ -15,6 +16,7 @@ import companhia.dao.PesProjJPADAO;
 import companhia.dao.ProjetoDAO;
 import companhia.dao.ProjetoJPADAO;
 import companhia.model.Departamento;
+import companhia.model.Dependente;
 import companhia.model.FLimpeza;
 import companhia.model.Funcionario;
 import companhia.model.PesProj;
@@ -26,11 +28,13 @@ public class Main {
 
 	public static void menu(Scanner sc){
 		DepartamentoDAO dptdao = new DepartamentoJPADAO();
+		DependenteDAO depedao = new DependenteJPADAO();
 		FuncionarioDAO fundao = new FuncionarioJPADAO();
 		ProjetoDAO  projdao = new ProjetoJPADAO();
 		PesProjDAO pesprojdao = new PesProjJPADAO();
 		
 		Departamento dpt;
+		Dependente depe;
 		Funcionario fun;
 		FLimpeza funL;
 		Pesquisador pesq;
@@ -38,12 +42,13 @@ public class Main {
 		PesProj pesproj;
 		
 		ArrayList<Departamento>dpts;
+		ArrayList<Dependente>depes;
 		ArrayList<Funcionario>funs;
 		ArrayList<Projeto> projs;
 		List<PesProj> pesprojs;
 		
-		int menu,id,jornada,horas;
-		String nome,dt,endereco,areaAtuacao,grauEscolaridade,cargo,tempo;
+		int menu,jornada,horas;
+		String nome,dt,endereco,areaAtuacao,grauEscolaridade,cargo,tempo,parentesco;
 		char sexo;
 		double salario;
 		Date data;
@@ -59,7 +64,7 @@ public class Main {
 				+"5 - Cadastrar Pesquisador\n"
 				+"6 - Cadastrar Secretario\n"
 				+"7 - Cadastrar F. de Limpeza\n"
-				+"8 - Cadastras Gerente\n"
+				+"8 - Cadastrar Gerente\n"
 				+"9 - Remover Funcionario\n"
 				+"10 - Ver Funcionarios de um Departamento\n"
 				+"11 - Ver Funcionario pelo id\n"		
@@ -71,8 +76,12 @@ public class Main {
 				+"16 - Ver Projetos de um Departamento\n"
 				+"17 - Ver Funcionarios de um Projeto\n"
 				+"18 - Ver Projetos de um Funcionario\n"
+				+"Dependentes==============\n"
+				+"19 - Cadastrar Depedente de um Funcionario\n"
+				+"20 - Ver Dependentes de um Funcionario\n"
+				+"21 - Remover Dependente de um Funcionario\n"
 				+"=========================\n"
-				+"19 - Sair\n"
+				+"22 - Sair\n"
 				+"=========================\n");
 		System.out.print("Digite uma opcao: ");
 		menu = sc.nextInt();
@@ -95,6 +104,7 @@ public class Main {
 			dptdao.save(dpt);
 			dptdao.commit();
 			System.out.println("Departamento adicionado com sucesso");
+			System.out.println("=========================");
 			menu(sc);			
 			break;
 		case 3:
@@ -105,12 +115,14 @@ public class Main {
 			dptdao.delete(dpt);
 			dptdao.commit();
 			System.out.println("Departamento Removido com sucesso!");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 4:
 			System.out.println("=========================");
 			funs = (ArrayList<Funcionario>) fundao.find();
 			System.out.println(funs.toString());
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 5:
@@ -143,7 +155,7 @@ public class Main {
 			fundao.save(fun);
 			fundao.commit();
 			System.out.println("Pesquisador adicionado com sucesso!");
-
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 6:
@@ -177,6 +189,7 @@ public class Main {
 			fundao.save(fun);
 			fundao.commit();
 			System.out.println("Secretario adicionado com sucesso!");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 7:
@@ -212,6 +225,7 @@ public class Main {
 			fundao.save(fun);
 			fundao.commit();
 			System.out.println("F. Limpeza adicionado com sucesso!");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 8:
@@ -224,6 +238,7 @@ public class Main {
 			fundao.save(funL);
 			fundao.commit();
 			System.out.println("Gerente Adicionado com Sucesso!");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 9:
@@ -235,6 +250,7 @@ public class Main {
 			fundao.commit();
 			System.out.println(fun.toString()+"\n"
 					+"Removido com Sucesso!!");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 10:
@@ -242,6 +258,7 @@ public class Main {
 			System.out.println("Digite o Id do Departamento");
 			funs = (ArrayList<Funcionario>) fundao.findByDpt(sc.nextInt());
 			System.out.println(funs.toString());
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 11:
@@ -249,12 +266,14 @@ public class Main {
 			System.out.println("Digite o id do funcionario: ");
 			fun = fundao.find(sc.nextInt());
 			System.out.println(fun.toString());
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 12:
 			System.out.println("=========================");
 			projs = (ArrayList<Projeto>) projdao.find();
 			System.out.println(projs.toString());
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 13:
@@ -271,6 +290,7 @@ public class Main {
 			projdao.save(proj);
 			projdao.commit();
 			System.out.println("Projeto Adicionado com Sucesso!!");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 14:
@@ -281,6 +301,7 @@ public class Main {
 			projdao.delete(proj);
 			projdao.commit();
 			System.out.println("Projeto Deletado com Sucesso!!");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 15:
@@ -304,12 +325,14 @@ public class Main {
 			pesprojdao.beginTransaction();
 			pesprojdao.save(pesproj);
 			pesprojdao.commit();
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 16:
 			System.out.println("=========================");
 			System.out.println("Digite o Id do Departamento: ");
 			System.out.println(projs = (ArrayList<Projeto>) projdao.findByDpt(sc.nextInt()));
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 17:
@@ -319,6 +342,7 @@ public class Main {
 			for(PesProj pp:pesprojs){
 				System.out.println(pp.toFString());
 			}
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 18:
@@ -328,9 +352,54 @@ public class Main {
 			for(PesProj pp:pesprojs){
 				System.out.println(pp.toPString());
 			}
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		case 19:
+			System.out.println("=========================");
+			System.out.println("Digite o nome: ");
+			sc.nextLine();
+			nome = sc.nextLine();
+			System.out.println("Digite o Sexo: ");
+			sexo = sc.nextLine().toUpperCase().charAt(0);
+			System.out.println("Digite o Grau de Parentesco: ");
+			parentesco = sc.nextLine();
+			System.out.println("Digite o Id do Funcionario: ");
+			fun = fundao.find(sc.nextInt());
+			depe = new Dependente(nome, sexo, parentesco, fun);
+			depedao.beginTransaction();
+			depedao.save(depe);
+			depedao.commit();
+			System.out.println("Dependente Adicionado com Sucesso!");
+			System.out.println("=========================");
+			menu(sc);
+			break;
+		case 20:
+			System.out.println("=========================");
+			System.out.println("Digite o Id do Funcionario:");
+			depes = (ArrayList<Dependente>) depedao.findByFun(sc.nextInt());
+			System.out.println("=========================");
+			System.out.println(depes.toString());
+			System.out.println("=========================");
+			menu(sc);
+			break;
+		case 21:
+			System.out.println("=========================");
+			System.out.println("Digite o Id do Dependente:");
+			depe = depedao.find(sc.nextInt());
+			depedao.beginTransaction();
+			depedao.delete(depe);
+			depedao.commit();
+			System.out.println("Dependente Removido com Sucesso");
+			System.out.println("=========================");
+			menu(sc);
+			break;
+		case 22:
+			depedao.close();
+			dptdao.close();
+			fundao.close();
+			projdao.close();
+			pesprojdao.close();
 			System.out.println("=========================");
 			System.out.println("Obrigado, volte sempre!");
 			System.out.println("=========================");
@@ -339,6 +408,7 @@ public class Main {
 		default:
 			System.out.println("=========================");
 			System.out.println("Opção Inválida! \n");
+			System.out.println("=========================");
 			menu(sc);
 			break;
 		}
